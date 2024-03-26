@@ -1,0 +1,152 @@
+[gd_scene load_steps=15 format=3 uid="uid://bgqo0hxhghg5"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_kne5k"]
+[ext_resource type="Texture2D" uid="uid://c8arnlq67qi7" path="res://third_person_controller_assets-main/textures/grids/Dark/texture_05.png" id="1_qywod"]
+[ext_resource type="Texture2D" uid="uid://b58xv1joypxo5" path="res://third_person_controller_assets-main/textures/grids/Orange/texture_09.png" id="2_dovtw"]
+[ext_resource type="Texture2D" uid="uid://d2u7gay8mxhwl" path="res://third_person_controller_assets-main/textures/grids/Purple/texture_10.png" id="3_4a8ki"]
+[ext_resource type="Texture2D" uid="uid://dprwn2mbhlchg" path="res://third_person_controller_assets-main/textures/grids/Green/texture_08.png" id="4_mdd5e"]
+[ext_resource type="PackedScene" uid="uid://cdgtjp2l24e8u" path="res://enemy.tscn" id="7_dvmfh"]
+[ext_resource type="PackedScene" uid="uid://cvcmlewl0xjv6" path="res://draw.tscn" id="8_lnyl7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xnie6"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_e6ymi"]
+sky_material = SubResource("ProceduralSkyMaterial_xnie6")
+
+[sub_resource type="Environment" id="Environment_ws4xu"]
+background_mode = 2
+sky = SubResource("Sky_e6ymi")
+tonemap_mode = 2
+sdfgi_enabled = true
+glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(1, 1, 1, 1)
+fog_density = 0.001
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bxf8a"]
+albedo_texture = ExtResource("1_qywod")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4ggqh"]
+albedo_texture = ExtResource("2_dovtw")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5u545"]
+albedo_texture = ExtResource("3_4a8ki")
+uv1_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_71o25"]
+albedo_texture = ExtResource("4_mdd5e")
+uv1_triplanar = true
+
+[node name="world" type="Node3D"]
+script = ExtResource("1_kne5k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ws4xu")
+
+[node name="map" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.277037, 0)
+
+[node name="floor" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0615845, -0.406575, 0)
+material_override = SubResource("StandardMaterial3D_bxf8a")
+use_collision = true
+size = Vector3(1000, 0.8, 1000)
+
+[node name="box" type="CSGBox3D" parent="map"]
+transform = Transform3D(-0.780387, 0, 0.625297, 0, 1, 0, -0.625297, 0, -0.780387, -3.09828, 0.5, -2.9669)
+material_override = SubResource("StandardMaterial3D_4ggqh")
+use_collision = true
+
+[node name="box2" type="CSGBox3D" parent="map"]
+transform = Transform3D(-0.780387, 0, 0.625297, 0, 1, 0, -0.625297, 0, -0.780387, 5.52559, 1.00414, -2.9669)
+material_override = SubResource("StandardMaterial3D_5u545")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[node name="box3" type="CSGBox3D" parent="map" groups=["enemy"]]
+transform = Transform3D(-0.780387, 0, 0.625297, 0, 1, 0, -0.625297, 0, -0.780387, -0.293332, 1.49832, 4.30512)
+material_override = SubResource("StandardMaterial3D_71o25")
+use_collision = true
+size = Vector3(3, 3, 3)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenu" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 382.0
+offset_top = 225.0
+offset_right = -382.0
+offset_bottom = -225.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MainMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MainMenu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu	"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HostButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "HOST"
+
+[node name="JoinButton" type="Button" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "JOIN"
+
+[node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter Address To Join"
+alignment = 1
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("..")
+
+[node name="enemy" parent="." instance=ExtResource("7_dvmfh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0908031, 1.53762, -4.80381)
+
+[node name="Node3D" parent="." instance=ExtResource("8_lnyl7")]
+transform = Transform3D(-0.0546816, 0, 0, 0, 0.0796432, 0, 0, 0, -0.0517328, -5.78344, 0, 0.594662)
+
+[node name="actionContainer" type="Node3D" parent="."]
+transform = Transform3D(-0.0237634, 2.95803, 0, -0.832008, -0.0844856, 0, 0, 0, 1.51958, 15.3476, 1.60231, -2.28715)
+
+[node name="points" type="Node3D" parent="."]
+transform = Transform3D(0.921301, 0, -0.388851, 0, 1, 0, 0.388851, 0, 0.921301, -6.69369, -0.0646875, 1.38959)
+
+[node name="from" type="CSGBox3D" parent="points"]
+transform = Transform3D(-0.999896, 1.11759e-08, 0.0144156, 0, 1, 5.82077e-11, -0.0144156, 2.77556e-17, -0.999896, 11.7902, 1.38177, -3.18633)
+material_override = SubResource("StandardMaterial3D_5u545")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[node name="to" type="CSGBox3D" parent="points"]
+transform = Transform3D(-0.999876, 3.72529e-09, 0.015742, 0, 1, 0, -0.015742, 0, -0.999876, 24.2239, 1.38177, -3.1054)
+material_override = SubResource("StandardMaterial3D_5u545")
+use_collision = true
+size = Vector3(2, 2, 2)
+
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]

@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://shka0ue48jut"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_tgi1n"]
+[ext_resource type="PackedScene" uid="uid://bu0mahdnfwt4b" path="res://third_person_controller_assets-main/models/RedTeam_TwoHandSwordsMen_Unit.fbx" id="2_hvdjk"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wrfwb"]
+height = 3.85038
+radius = 0.391177
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.516272, 0)
+script = ExtResource("1_tgi1n")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.505206, 0, 2.03263, 0, 1, 0, -2.34638, 0, 0.437651, -0.178635, 1.89407, -0.178036)
+shape = SubResource("CylinderShape3D_wrfwb")
+
+[node name="visuals" type="Node3D" parent="."]
+
+[node name="Root Scene" parent="visuals" instance=ExtResource("2_hvdjk")]
+transform = Transform3D(-0.983685, 0, 0.179901, 0, 1, 0, -0.179901, 0, -0.983685, -0.199022, 0.0212084, -0.0940003)
+
+[node name="Skeleton3D" parent="visuals/Root Scene/RootNode/RedTeam_SwordsMen_Armature" index="0"]
+bones/2/rotation = Quaternion(-0.030091, -1.31949e-15, -7.17425e-09, 0.999547)
+bones/4/rotation = Quaternion(-0.441265, 0.400232, 0.80209, -0.04184)
+bones/5/rotation = Quaternion(0.310139, -0.0906506, 0.0926143, 0.941817)
+bones/8/rotation = Quaternion(0.0766047, 0.142602, -0.453865, 0.876244)
+bones/10/rotation = Quaternion(0.0126013, 0.265647, 0.958639, 0.101413)
+bones/11/rotation = Quaternion(0.655631, -0.0651333, 0.22807, 0.716861)
+bones/14/rotation = Quaternion(0.035357, 0.112283, 0.731217, 0.671911)
+bones/16/rotation = Quaternion(-0.525023, -0.0867071, 0.436677, 0.725359)
+bones/18/rotation = Quaternion(0.5, 0.5, -0.5, -0.5)
+bones/21/rotation = Quaternion(0.612372, 0.353553, 0.612372, 0.353553)
+bones/24/rotation = Quaternion(0.999922, 8.41219e-09, -6.71492e-07, -0.0125269)
+bones/26/rotation = Quaternion(0.999922, -8.41219e-09, 6.71492e-07, -0.0125269)
+
+[node name="camera_mount" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.36663, 0)
+
+[node name="Camera3D" type="Camera3D" parent="camera_mount"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0733765, 0.307358, 2.50781)
+
+[editable path="visuals/Root Scene"]
